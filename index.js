@@ -2,8 +2,8 @@ const canvas = document.querySelector('canvas')
 const scoreEle = document.querySelector('#scoreEle')
 const context = canvas.getContext('2d')
 
-canvas.width = innerWidth
-canvas.height = innerHeight
+canvas.width = 1366
+canvas.height = 768
 
 
 class Player {
