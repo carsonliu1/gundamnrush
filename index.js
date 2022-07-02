@@ -285,6 +285,7 @@ let game = {
 }
 let score = 0
 
+
 for(let x = 0; x < 100; x++) {
   particles.push(new Particle({
     position: {
@@ -319,8 +320,11 @@ const createParticles = ({ object, color, fades }) => {
 }
 
 
+
 const animate = () => {
   if(!game.active) return alert('GET GOOD')
+  if(score === 100000) return alert('WIN')
+  // if(scoreEle.innerHTML === 200) return alert('aaa')
   requestAnimationFrame(animate)
   // context.fillStyle ='black'
   // context.fillRect(0, 0, canvas.width, canvas.height)
