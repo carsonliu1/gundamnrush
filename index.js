@@ -101,7 +101,7 @@ class Enemy {
       },
        velocity: {
         x: 0,
-        y: 5
+        y: 13
        }
     }))
   }
@@ -293,11 +293,11 @@ for(let x = 0; x < 100; x++) {
       y: Math.random() * canvas.height
     },
     velocity: {
-      x: 0,
-      y: .3
+      x: 5,
+      y: 7
     },
-    radius: 2.5,
-    color: '#114A78'
+    radius: 1.5,
+    color: 'black'
   }))
 }
 
@@ -329,7 +329,7 @@ const animate = () => {
   // context.fillStyle ='black'
   // context.fillRect(0, 0, canvas.width, canvas.height)
   const background = new Image()
-  background.src = 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg'
+  background.src = 'https://i.gifer.com/1ErA.gif'
   background.onload = () => {
   context.drawImage(background, 0, 0, canvas.width, canvas.height)
 }
@@ -391,7 +391,7 @@ const animate = () => {
   grids.forEach((grid, gridIdx) => {
     grid.update()
 
-    if(frames % 100 === 0 && grid.enemies.length > 0) {
+    if(frames % 30 === 0 && grid.enemies.length > 0) {
       grid.enemies[Math.floor(Math.random() * grid.enemies.length)].shoot(enemyProjectiles)
     }
     grid.enemies.forEach((enemy, idx) => {
@@ -434,10 +434,10 @@ const animate = () => {
   })
 
   if(keys.a.pressed && player.position.x >= 0) {
-    player.velocity.x = -5
+    player.velocity.x = -10
     player.rotation = - .15
   } else if(keys.d.pressed && player.position.x + player.width <= canvas.width) {
-    player.velocity.x = 5
+    player.velocity.x = 10
     player.rotation = .15
   } else {
     player.velocity.x = 0
@@ -445,9 +445,9 @@ const animate = () => {
   }
 
   if(keys.w.pressed && player.position.y >= canvas.height - 300) {
-    player.velocity.y = -5
+    player.velocity.y = -10
   } else if(keys.s.pressed && player.position.y <= canvas.height - 130) {
-    player.velocity.y = 5
+    player.velocity.y = 10
   } else {
     player.velocity.y = 0
   }
