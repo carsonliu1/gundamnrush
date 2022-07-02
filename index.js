@@ -101,7 +101,7 @@ class Enemy {
       },
        velocity: {
         x: 0,
-        y: 13
+        y: 10
        }
     }))
   }
