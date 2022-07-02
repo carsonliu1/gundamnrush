@@ -295,8 +295,8 @@ for(let x = 0; x < 100; x++) {
       x: 0,
       y: .3
     },
-    radius: 2,
-    color: 'yellow'
+    radius: 2.5,
+    color: '#114A78'
   }))
 }
 
@@ -322,8 +322,13 @@ const createParticles = ({ object, color, fades }) => {
 const animate = () => {
   if(!game.active) return alert('GET GOOD')
   requestAnimationFrame(animate)
-  context.fillStyle ='black'
-  context.fillRect(0, 0, canvas.width, canvas.height)
+  // context.fillStyle ='black'
+  // context.fillRect(0, 0, canvas.width, canvas.height)
+  const background = new Image()
+  background.src = 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg'
+  background.onload = () => {
+  context.drawImage(background, 0, 0, canvas.width, canvas.height)
+}
   player.update()
 
   particles.forEach((particle, idx) => {
