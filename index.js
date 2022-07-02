@@ -323,7 +323,7 @@ const createParticles = ({ object, color, fades }) => {
 
 const animate = () => {
   if(!game.active) return alert('GET GOOD')
-  if(score === 100000) return alert('WIN')
+  if(score >= 100000) return alert('WIN')
   // if(scoreEle.innerHTML === 200) return alert('aaa')
   requestAnimationFrame(animate)
   // context.fillStyle ='black'
@@ -391,7 +391,7 @@ const animate = () => {
   grids.forEach((grid, gridIdx) => {
     grid.update()
 
-    if(frames % 30 === 0 && grid.enemies.length > 0) {
+    if(frames % 27 === 0 && grid.enemies.length > 0) {
       grid.enemies[Math.floor(Math.random() * grid.enemies.length)].shoot(enemyProjectiles)
     }
     grid.enemies.forEach((enemy, idx) => {
@@ -434,10 +434,10 @@ const animate = () => {
   })
 
   if(keys.a.pressed && player.position.x >= 0) {
-    player.velocity.x = -10
+    player.velocity.x = -7
     player.rotation = - .15
   } else if(keys.d.pressed && player.position.x + player.width <= canvas.width) {
-    player.velocity.x = 10
+    player.velocity.x = 7
     player.rotation = .15
   } else {
     player.velocity.x = 0
@@ -445,16 +445,16 @@ const animate = () => {
   }
 
   if(keys.w.pressed && player.position.y >= canvas.height - 300) {
-    player.velocity.y = -10
+    player.velocity.y = -7
   } else if(keys.s.pressed && player.position.y <= canvas.height - 130) {
-    player.velocity.y = 10
+    player.velocity.y = 7
   } else {
     player.velocity.y = 0
   }
 
   if(frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500) + 500
+    randomInterval = Math.floor(Math.random() * 500) + 300
     frames = 0
   }
 
@@ -486,7 +486,7 @@ addEventListener('keydown', ({ key }) => {
         },
         velocity: {
           x: 0,
-          y: -10
+          y: -7
         }
       }))
       break
