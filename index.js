@@ -478,18 +478,18 @@ addEventListener('keydown', ({ key }) => {
     case 's':
       keys.s.pressed = true
       break
-    case ' ':
-      projectiles.push(new Projectile({
-        position: {
-          x: player.position.x + player.width / 2,
-          y: player.position.y
-        },
-        velocity: {
-          x: 0,
-          y: -7
-        }
-      }))
-      break
+    // case ' ':
+    //   projectiles.push(new Projectile({
+    //     position: {
+    //       x: player.position.x + player.width / 2,
+    //       y: player.position.y
+    //     },
+    //     velocity: {
+    //       x: 0,
+    //       y: -7
+    //     }
+    //   }))
+    //   break
   }
 })
 
@@ -508,7 +508,26 @@ addEventListener('keyup', ({ key }) => {
     case 's':
       keys.s.pressed = false
       break
-    case ' ':
+    // case ' ':
+    //   break
+  }
+})
+
+
+addEventListener('click', ({ type }) => {
+  if(game.over) return
+  switch(type) {
+    case 'click':
+      projectiles.push(new Projectile({
+        position: {
+          x: player.position.x + player.width / 2,
+          y: player.position.y
+        },
+        velocity: {
+          x: 0,
+          y: -7
+        }
+      }))
       break
   }
 })
