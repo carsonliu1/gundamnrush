@@ -101,7 +101,7 @@ class Enemy {
       },
        velocity: {
         x: 0,
-        y: 10
+        y: 7
        }
     }))
   }
@@ -391,7 +391,7 @@ const animate = () => {
   grids.forEach((grid, gridIdx) => {
     grid.update()
 
-    if(frames % 27 === 0 && grid.enemies.length > 0) {
+    if(frames % 35 === 0 && grid.enemies.length > 0) {
       grid.enemies[Math.floor(Math.random() * grid.enemies.length)].shoot(enemyProjectiles)
     }
     grid.enemies.forEach((enemy, idx) => {
