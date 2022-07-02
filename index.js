@@ -19,8 +19,8 @@ class Player {
     image.src = './img/plane.png'
     image.onload = () => {
       this.image = image
-      this.height = image.height * 0.40
-      this.width = image.width * 0.40
+      this.height = image.height * 0.30
+      this.width = image.width * 0.25
       this.position = {
         x: canvas.width / 2 - this.width / 2,
         y: canvas.height - this.height - 40
@@ -94,14 +94,20 @@ class Enemy {
   }
 
   shoot(enemyProjectiles) {
+    let speed
+    if(Math.random() > 0.5) {
+      speed =  Math.floor(Math.random() * 3)
+    } else {
+      speed = -(Math.floor(Math.random() * 3))
+    }
     enemyProjectiles.push(new EnemyProjectile({
       position: {
         x: this.position.x + this.width / 2,
         y: this.position.y + this.height
       },
        velocity: {
-        x: 0,
-        y: 2
+        x: speed,
+        y: Math.floor(Math.random() * 2) + 3
        }
     }))
   }
@@ -361,7 +367,8 @@ const animate = () => {
 
     if(enemyProjectile.position.y + enemyProjectile.height >= player.position.y &&
        enemyProjectile.position.x + enemyProjectile.width >= player.position.x &&
-       enemyProjectile.position.x <= player.position.x + player.width) {
+       enemyProjectile.position.x <= player.position.x + player.width * 0.5 &&
+       enemyProjectile.position.y <= player.position.y + player.height) {
         setTimeout(() => {
           enemyProjectiles.splice(idx, 1)
           player.opacity = 0
@@ -372,7 +379,7 @@ const animate = () => {
         }, 2000)
         createParticles({
           object: player,
-          color: 'lightblue',
+          color: 'yellow',
           fades: true
         })
     }
@@ -444,7 +451,7 @@ const animate = () => {
     player.rotation = 0
   }
 
-  if(keys.w.pressed && player.position.y >= canvas.height - 300) {
+  if(keys.w.pressed && player.position.y >= canvas.height - 270) {
     player.velocity.y = -7
   } else if(keys.s.pressed && player.position.y <= canvas.height - 130) {
     player.velocity.y = 7
