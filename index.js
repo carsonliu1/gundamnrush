@@ -121,7 +121,7 @@ class Grid {
 
     this.enemies = []
     const cols = Math.floor(Math.random() * 5 + 5)
-    const rows = Math.floor(Math.random() * 5 + 2)
+    const rows = Math.floor(Math.random() * 2 + 2)
     this.width = cols * 50
     for(let x = 0; x < cols; x++) {
       for(let y = 0; y < rows; y++) {
