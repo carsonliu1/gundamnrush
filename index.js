@@ -1,9 +1,13 @@
 const canvas = document.querySelector('canvas')
 const scoreEle = document.querySelector('#scoreEle')
+const startGameEle = document.querySelector('#startGameBtn')
+const startModel = document.querySelector('#model')
+const endGameScore = document.querySelector('#endGameScore')
 const context = canvas.getContext('2d')
 
-canvas.width = 1366
-canvas.height = 768
+canvas.width = innerWidth
+canvas.height = innerHeight
+console.log(innerWidth, innerHeight)
 
 
 class Player {
@@ -258,14 +262,31 @@ class EnemyProjectile {
   }
 }
 
-const player = new Player()
-const projectiles = []
-const grids = []
-const enemyProjectiles = []
-const particles = []
+let player = new Player()
+let projectiles = []
+let grids = []
+let enemyProjectiles = []
+let particles = []
+
+const init = () => {
+  player = new Player()
+  projectiles = []
+  grids = []
+  enemyProjectiles = []
+  particles = []
+  game.over = false
+  game.active = true
+  keys.a.pressed = false
+  keys.d.pressed = false
+  keys.w.pressed = false
+  keys.s.pressed = false
+  score = 0
+  scoreEle.innerHTML = score
+  endGameScore.innerHTML = score
+}
 
 player.draw()
-const keys = {
+let keys = {
   a: {
     pressed: false
   },
@@ -325,20 +346,34 @@ const createParticles = ({ object, color, fades }) => {
   }
 }
 
+const death = new Audio('./bgm/death.mp3')
+const bgm = new Audio('./bgm/megaman.mp3')
+const audio = new Audio('./bgm/shootsound.mp3')
 
-
+let animationId
 const animate = () => {
-  if(!game.active) return alert('GET GOOD')
-  if(score >= 100000) return alert('WIN')
+  if(!game.active) {
+    bgm.pause()
+    startGameEle.innerHTML = 'Game Over! Restart'
+    startModel.style.display = 'flex'
+    endGameScore.innerHTML = score
+    return
+  }
+  if(score >= 100000) {
+    bgm.pause()
+    game.active = false
+    game.over = true
+    return alert('You win!')
+  }
   // if(scoreEle.innerHTML === 200) return alert('aaa')
-  requestAnimationFrame(animate)
+  animationId = requestAnimationFrame(animate)
   // context.fillStyle ='black'
   // context.fillRect(0, 0, canvas.width, canvas.height)
   const background = new Image()
   background.src = 'https://i.gifer.com/1ErA.gif'
   background.onload = () => {
-  context.drawImage(background, 0, 0, canvas.width, canvas.height)
-}
+    context.drawImage(background, 0, 0, canvas.width, canvas.height)
+  }
   player.update()
 
   particles.forEach((particle, idx) => {
@@ -364,7 +399,6 @@ const animate = () => {
       enemyProjectile.update()
     }
 
-
     if(enemyProjectile.position.y + enemyProjectile.height >= player.position.y &&
        enemyProjectile.position.x + enemyProjectile.width >= player.position.x &&
        enemyProjectile.position.x <= player.position.x + player.width * 0.5 &&
@@ -382,8 +416,10 @@ const animate = () => {
           color: 'yellow',
           fades: true
         })
-    }
-  })
+        death.volume = 0.1
+        death.play()
+      }
+    })
 
   projectiles.forEach((ele, idx) => {
     if(ele.position.y + ele.radius <= 0) {
@@ -398,7 +434,7 @@ const animate = () => {
   grids.forEach((grid, gridIdx) => {
     grid.update()
 
-    if(frames % 35 === 0 && grid.enemies.length > 0) {
+    if(frames % 40 === 0 && grid.enemies.length > 0) {
       grid.enemies[Math.floor(Math.random() * grid.enemies.length)].shoot(enemyProjectiles)
     }
     grid.enemies.forEach((enemy, idx) => {
@@ -427,7 +463,6 @@ const animate = () => {
               if(grid.enemies.length > 0) {
                 const firstEnemy = grid.enemies[0]
                 const lastEnemy = grid.enemies[grid.enemies.length - 1]
-
                 grid.width = lastEnemy.position.x - firstEnemy.position.x + lastEnemy.width
                 grid.position.x = firstEnemy.position.x
               } else {
@@ -467,8 +502,6 @@ const animate = () => {
 
   frames++
 }
-animate()
-
 
 addEventListener('keydown', ({ key }) => {
   if(game.over) return
@@ -520,9 +553,10 @@ addEventListener('keyup', ({ key }) => {
   }
 })
 
-
 addEventListener('click', ({ type }) => {
   if(game.over) return
+  audio.volume = 0.025
+  audio.play()
   switch(type) {
     case 'click':
       projectiles.push(new Projectile({
@@ -537,4 +571,22 @@ addEventListener('click', ({ type }) => {
       }))
       break
   }
+})
+
+// addEventListener("click", function () {
+//   bgm.loop = true
+//   bgm.volume = 0.13
+//   if(game.active) {
+//     bgm.play()
+//   }
+// })
+
+startGameEle.addEventListener('click', () => {
+  bgm.loop = true
+  bgm.volume = 0.13
+  bgm.play()
+
+  init()
+  animate()
+  startModel.style.display = 'none'
 })
