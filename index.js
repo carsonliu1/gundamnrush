@@ -5,8 +5,8 @@ const startModel = document.querySelector('#model')
 const endGameScore = document.querySelector('#endGameScore')
 const context = canvas.getContext('2d')
 
-canvas.width = 1280
-canvas.height = 720
+canvas.width = innerWidth
+canvas.height = innerHeight
 
 
 class Player {
