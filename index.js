@@ -5,8 +5,8 @@ const startModel = document.querySelector('#model')
 const endGameScore = document.querySelector('#endGameScore')
 const context = canvas.getContext('2d')
 
-canvas.width = innerWidth
-canvas.height = innerHeight
+canvas.width = 1280
+canvas.height = 720
 
 
 class Player {
@@ -110,7 +110,7 @@ class Enemy {
       },
        velocity: {
         x: speed,
-        y: Math.floor(Math.random() * 2) + 3
+        y: Math.floor(Math.random() * 5) + 5
        }
     }))
   }
@@ -272,7 +272,6 @@ const init = () => {
   projectiles = []
   grids = []
   enemyProjectiles = []
-  particles = []
   game.over = false
   game.active = true
   keys.a.pressed = false
@@ -390,7 +389,7 @@ const animate = () => {
   })
 
   enemyProjectiles.forEach((enemyProjectile, idx) => {
-    if(enemyProjectile.position.y + enemyProjectile.height === canvas.height) {
+    if(enemyProjectile.position.y + enemyProjectile.height >= canvas.height - 20) {
       setTimeout(() => {
         enemyProjectiles.splice(idx, 1)
       }, 0)
@@ -433,7 +432,7 @@ const animate = () => {
   grids.forEach((grid, gridIdx) => {
     grid.update()
 
-    if(frames % 40 === 0 && grid.enemies.length > 0) {
+    if(frames % 27 === 0 && grid.enemies.length > 0) {
       grid.enemies[Math.floor(Math.random() * grid.enemies.length)].shoot(enemyProjectiles)
     }
     grid.enemies.forEach((enemy, idx) => {
@@ -487,7 +486,7 @@ const animate = () => {
 
   if(keys.w.pressed && player.position.y >= canvas.height - 270) {
     player.velocity.y = -7
-  } else if(keys.s.pressed && player.position.y <= canvas.height - 130) {
+  } else if(keys.s.pressed && player.position.y <= canvas.height - 75) {
     player.velocity.y = 7
   } else {
     player.velocity.y = 0
@@ -495,7 +494,7 @@ const animate = () => {
 
   if(frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500) + 300
+    randomInterval = Math.floor(Math.random() * 500) + 100
     frames = 0
   }
 
@@ -552,12 +551,13 @@ addEventListener('keyup', ({ key }) => {
   }
 })
 
-addEventListener('click', ({ type }) => {
+addEventListener('keydown', (e) => {
   if(game.over) return
+  if(e.repeat) return
   audio.volume = 0.025
   audio.play()
-  switch(type) {
-    case 'click':
+  switch(e.key) {
+    case ' ':
       projectiles.push(new Projectile({
         position: {
           x: player.position.x + player.width / 2,
