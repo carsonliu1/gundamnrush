@@ -556,10 +556,10 @@ addEventListener('keyup', ({ key }) => {
 addEventListener('keydown', (e) => {
   if(game.over) return
   if(e.repeat) return
-  audio.volume = 0.025
-  audio.play()
   switch(e.key) {
     case ' ':
+      audio.volume = 0.025
+      audio.play()
       projectiles.push(new Projectile({
         position: {
           x: player.position.x + player.width / 2,
