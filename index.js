@@ -389,7 +389,7 @@ const animate = () => {
   })
 
   enemyProjectiles.forEach((enemyProjectile, idx) => {
-    if(enemyProjectile.position.y + enemyProjectile.height >= canvas.height - 20) {
+    if(enemyProjectile.position.y + enemyProjectile.height === canvas.height - 15) {
       setTimeout(() => {
         enemyProjectiles.splice(idx, 1)
       }, 0)
