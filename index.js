@@ -110,7 +110,7 @@ class Enemy {
       },
        velocity: {
         x: speed,
-        y: Math.floor(Math.random() * 5) + 5
+        y: Math.floor(Math.random() * 4) + 2
        }
     }))
   }
