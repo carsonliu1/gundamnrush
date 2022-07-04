@@ -7,7 +7,6 @@ const context = canvas.getContext('2d')
 
 canvas.width = innerWidth
 canvas.height = innerHeight
-console.log(innerWidth, innerHeight)
 
 
 class Player {
@@ -391,7 +390,7 @@ const animate = () => {
   })
 
   enemyProjectiles.forEach((enemyProjectile, idx) => {
-    if(enemyProjectile.position.y + enemyProjectile.height >= canvas.height) {
+    if(enemyProjectile.position.y + enemyProjectile.height === canvas.height) {
       setTimeout(() => {
         enemyProjectiles.splice(idx, 1)
       }, 0)
