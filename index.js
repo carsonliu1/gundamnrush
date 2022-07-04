@@ -3,7 +3,9 @@ const scoreEle = document.querySelector('#scoreEle')
 const startGameEle = document.querySelector('#startGameBtn')
 const startModel = document.querySelector('#model')
 const endGameScore = document.querySelector('#endGameScore')
+const cornerScore = document.querySelector('#cornerScore')
 const context = canvas.getContext('2d')
+
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -588,4 +590,6 @@ startGameEle.addEventListener('click', () => {
   init()
   animate()
   startModel.style.display = 'none'
+  cornerScore.style.display = 'flex'
 })
+cornerScore.style.display = 'none'
