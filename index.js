@@ -558,7 +558,7 @@ addEventListener('keydown', (e) => {
   if(e.repeat) return
   switch(e.key) {
     case ' ':
-      audio.volume = 0.025
+      audio.volume = 0.04
       audio.play()
       projectiles.push(new Projectile({
         position: {
@@ -573,14 +573,6 @@ addEventListener('keydown', (e) => {
       break
   }
 })
-
-// addEventListener("click", function () {
-//   bgm.loop = true
-//   bgm.volume = 0.13
-//   if(game.active) {
-//     bgm.play()
-//   }
-// })
 
 startGameEle.addEventListener('click', () => {
   bgm.loop = true
