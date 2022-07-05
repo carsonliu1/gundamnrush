@@ -9,23 +9,31 @@ const second = document.querySelector('#second')
 const third = document.querySelector('#third')
 const fourth = document.querySelector('#fourth')
 const fifth = document.querySelector('#fifth')
+const top5 = document.querySelector('#top5')
 const context = canvas.getContext('2d')
-axios.get(`${window.location.hostname}:80/scores`)
-  .then(res => {
-    first.innerHTML = `${res.data[0].name}: ${res.data[0].score}`
-    second.innerHTML = `${res.data[1].name}: ${res.data[1].score}`
-    third.innerHTML = `${res.data[2].name}: ${res.data[2].score}`
-    fourth.innerHTML = `${res.data[3].name}: ${res.data[3].score}`
-    fifth.innerHTML = `${res.data[4].name}: ${res.data[4].score}`
-  })
-  .catch(err => alert(err))
+// const getScores = () => {
+//   axios.get(`http://localhost:80/scores`)
+//   .then(res => {
+//     first.innerHTML = `${res.data[0].name}: ${res.data[0].score}`
+//     second.innerHTML = `${res.data[1].name}: ${res.data[1].score}`
+//     third.innerHTML = `${res.data[2].name}: ${res.data[2].score}`
+//     fourth.innerHTML = `${res.data[3].name}: ${res.data[3].score}`
+//     fifth.innerHTML = `${res.data[4].name}: ${res.data[4].score}`
+//   })
+//   .catch(err => alert(err))
+//   top5.style.display ='flex'
+// }
 
-const postScore = (name, score) => {
-  axios.post(`${window.location.hostname}:80/scores`, {name, score})
-    .then(res => alert('Your name and score has been added.'))
-    .catch(err => alert(err))
-}
-
+// const postScore = (name, score) => {
+//   if(name.length !== 0) {
+//   axios.post(`http://localhost:80/scores`, {name, score})
+//     .then(res => {
+//       alert('Your name and score has been added.')
+//       getScores()
+//     })
+//     .catch(err => alert(err))
+//   }
+// }
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -125,6 +133,12 @@ class Enemy {
     } else {
       speed = -(Math.floor(Math.random() * 3))
     }
+    let ySpeed = Math.floor(Math.random() * 4) + 2
+    if(timer > 10000) {
+      ySpeed = Math.floor(Math.random() * 4) + 3
+    } else if(timer > 25000) {
+      ySpeed = Math.floor(Math.random() * 4) + 5
+    }
     enemyProjectiles.push(new EnemyProjectile({
       position: {
         x: this.position.x + this.width / 2,
@@ -132,7 +146,7 @@ class Enemy {
       },
        velocity: {
         x: speed,
-        y: Math.floor(Math.random() * 4) + 2
+        y: ySpeed
        }
     }))
   }
@@ -301,6 +315,8 @@ const init = () => {
   keys.w.pressed = false
   keys.s.pressed = false
   score = 0
+  timer = 0
+  frames = 0
   scoreEle.innerHTML = score
   endGameScore.innerHTML = score
 }
@@ -325,12 +341,13 @@ let keys = {
 }
 
 let frames = 0
+let score = 0
+let timer = 0
 let randomInterval = Math.floor(Math.random() * 500) + 500
 let game = {
   over: false,
   active: true
 }
-let score = 0
 
 
 for(let x = 0; x < 100; x++) {
@@ -378,8 +395,8 @@ const animate = () => {
     startGameEle.innerHTML = 'Game Over! Restart'
     startModel.style.display = 'flex'
     endGameScore.innerHTML = score
-    let char = prompt('Enter your name to save')
-    postScore(char, score)
+    // let char = prompt('Enter your name to save')
+    // postScore(char, score)
     return
   }
   if(score >= 100000) {
@@ -456,8 +473,13 @@ const animate = () => {
 
   grids.forEach((grid, gridIdx) => {
     grid.update()
-
-    if(frames % 32 === 0 && grid.enemies.length > 0) {
+    let num = 35
+    if(timer > 10000) {
+      num = 30
+    } else if(timer > 25000) {
+      num = 27
+    }
+    if(frames % num === 0 && grid.enemies.length > 0) {
       grid.enemies[Math.floor(Math.random() * grid.enemies.length)].shoot(enemyProjectiles)
     }
     grid.enemies.forEach((enemy, idx) => {
@@ -519,11 +541,18 @@ const animate = () => {
 
   if(frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500) + 150
+    let amt = 150
+    if(timer > 10000) {
+      amt = 110
+    } else if(timer > 20000) {
+      amt = 99
+    }
+    randomInterval = Math.floor(Math.random() * 500) + amt
     frames = 0
   }
 
   frames++
+  timer++
 }
 
 addEventListener('keydown', ({ key }) => {
@@ -608,3 +637,4 @@ startGameEle.addEventListener('click', () => {
   cornerScore.style.display = 'flex'
 })
 cornerScore.style.display = 'none'
+top5.style.display ='none'
