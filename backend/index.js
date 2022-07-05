@@ -1,10 +1,12 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
 const { getAll, submit, top5 } = require('./models/scoreModel.js')
+const cors = require('cors')
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 app.use(express.json())
+app.use(cors())
 
 app.get('/scores', (req, res) => {
   top5((err, data) => {

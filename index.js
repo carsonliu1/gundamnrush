@@ -4,7 +4,27 @@ const startGameEle = document.querySelector('#startGameBtn')
 const startModel = document.querySelector('#model')
 const endGameScore = document.querySelector('#endGameScore')
 const cornerScore = document.querySelector('#cornerScore')
+const first = document.querySelector('#first')
+const second = document.querySelector('#second')
+const third = document.querySelector('#third')
+const fourth = document.querySelector('#fourth')
+const fifth = document.querySelector('#fifth')
 const context = canvas.getContext('2d')
+axios.get('http://localhost:3000/scores')
+  .then(res => {
+    first.innerHTML = `${res.data[0].name}: ${res.data[0].score}`
+    second.innerHTML = `${res.data[1].name}: ${res.data[1].score}`
+    third.innerHTML = `${res.data[2].name}: ${res.data[2].score}`
+    fourth.innerHTML = `${res.data[3].name}: ${res.data[3].score}`
+    fifth.innerHTML = `${res.data[4].name}: ${res.data[4].score}`
+  })
+  .catch(err => alert(err))
+
+const postScore = (name, score) => {
+  axios.post('http://localhost:3000/scores', {name, score})
+    .then(res => alert('Your name and score has been added.'))
+    .catch(err => alert(err))
+}
 
 
 canvas.width = innerWidth
@@ -350,6 +370,7 @@ const death = new Audio('./bgm/death.mp3')
 const bgm = new Audio('./bgm/megaman.mp3')
 const audio = new Audio('./bgm/shootsound.mp3')
 
+
 let animationId
 const animate = () => {
   if(!game.active) {
@@ -357,6 +378,8 @@ const animate = () => {
     startGameEle.innerHTML = 'Game Over! Restart'
     startModel.style.display = 'flex'
     endGameScore.innerHTML = score
+    let char = prompt('Enter your name to save')
+    postScore(char, score)
     return
   }
   if(score >= 100000) {
