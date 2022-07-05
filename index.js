@@ -496,7 +496,7 @@ const animate = () => {
 
   if(frames % randomInterval === 0) {
     grids.push(new Grid())
-    randomInterval = Math.floor(Math.random() * 500) + 200
+    randomInterval = Math.floor(Math.random() * 500) + 150
     frames = 0
   }
 
