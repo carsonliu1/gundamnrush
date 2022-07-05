@@ -10,7 +10,7 @@ const third = document.querySelector('#third')
 const fourth = document.querySelector('#fourth')
 const fifth = document.querySelector('#fifth')
 const context = canvas.getContext('2d')
-axios.get('http://localhost:3000/scores')
+axios.get('http://localhost:80/scores')
   .then(res => {
     first.innerHTML = `${res.data[0].name}: ${res.data[0].score}`
     second.innerHTML = `${res.data[1].name}: ${res.data[1].score}`
@@ -21,7 +21,7 @@ axios.get('http://localhost:3000/scores')
   .catch(err => alert(err))
 
 const postScore = (name, score) => {
-  axios.post('http://localhost:3000/scores', {name, score})
+  axios.post('http://localhost:80/scores', {name, score})
     .then(res => alert('Your name and score has been added.'))
     .catch(err => alert(err))
 }
