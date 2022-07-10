@@ -495,6 +495,7 @@ const animate = () => {
           })
           death.volume = 0.1
           death.play()
+          return
         }
       }
       projectiles.forEach((projectile, idx2) => {
