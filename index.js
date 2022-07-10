@@ -244,7 +244,7 @@ class Particle {
     this.draw()
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
-    if(this.fades) this.opacity -= 0.01
+    if(this.fades) this.opacity -= 0.03
   }
 }
 
@@ -304,8 +304,6 @@ const init = () => {
   frames = 0
   scoreEle.innerHTML = score
   endGameScore.innerHTML = score
-  startModel.style.visibility = 'hidden'
-  cornerScore.style.visibility = 'visible'
 }
 
 player.draw()
@@ -363,7 +361,7 @@ const createParticles = ({ object, color, fades }) => {
         x: (Math.random() - 0.5) * 2,
         y: (Math.random() - 0.5) * 2
       },
-      radius: Math.random() * 1.8,
+      radius: Math.random() * 2,
       color: color || 'orange',
       fades
     }))
@@ -446,7 +444,7 @@ const animate = () => {
         }, 0)
         setTimeout(() => {
           game.active = false
-        }, 2000)
+        }, 1000)
         createParticles({
           object: player,
           color: 'yellow',
@@ -486,13 +484,12 @@ const animate = () => {
           enemy.position.x <= player.position.x + player.width * 0.5 &&
           enemy.position.y <= player.position.y + player.height) {
           setTimeout(() => {
-            enemyProjectiles.splice(idx, 1)
             player.opacity = 0
             game.over = true
           }, 0)
           setTimeout(() => {
             game.active = false
-          }, 2000)
+          }, 1000)
           createParticles({
             object: player,
             color: 'yellow',
@@ -677,6 +674,8 @@ startGameEle.addEventListener('click', () => {
   animate()
   startModel.style.visibility = 'hidden'
   cornerScore.style.visibility = 'visible'
+  points.style.visibility = 'hidden'
+  endGameScore.style.visibility = 'hidden'
 })
 cornerScore.style.visibility = 'hidden'
 top5.style.visibility = 'hidden'
