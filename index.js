@@ -244,7 +244,7 @@ class Particle {
     this.draw()
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
-    if(this.fades) this.opacity -= 0.03
+    if(this.fades) this.opacity -= 0.01
   }
 }
 
@@ -361,7 +361,7 @@ const createParticles = ({ object, color, fades }) => {
         x: (Math.random() - 0.5) * 2,
         y: (Math.random() - 0.5) * 2
       },
-      radius: Math.random() * 2,
+      radius: Math.random() * 1.8,
       color: color || 'orange',
       fades
     }))
