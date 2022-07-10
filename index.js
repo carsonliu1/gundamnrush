@@ -64,8 +64,6 @@ class Player {
   }
 
   draw() {
-    // context.fillStyle = 'red'
-    // context.fillRect(this.position.x, this.position.y, this.width, this.height)
     if(this.image) {
       context.save()
       context.globalAlpha = this.opacity
@@ -107,15 +105,8 @@ class Enemy {
   }
 
   draw() {
-    // context.fillStyle = 'red'
-    // context.fillRect(this.position.x, this.position.y, this.width, this.height)
     if(this.image) {
-      // context.save()
-      // context.translate(player.position.x + player.width / 2, player.position.y + player.height / 2)
-      // context.rotate(this.rotation)
-      // context.translate(-(player.position.x + player.width / 2), -(player.position.y + player.height / 2))
       context.drawImage(this.image, this.position.x, this.position.y, this.height, this.width)
-      // context.restore()
     }
   }
 
@@ -214,11 +205,6 @@ class Projectile {
 
 
   draw() {
-    // context.beginPath()
-    // context.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    // context.fillStyle = 'red'
-    // context.fill()
-    // context.closePath()
     if(this.image) {
       context.drawImage(this.image, this.position.x, this.position.y, this.height, this.width)
     }
@@ -282,8 +268,6 @@ class EnemyProjectile {
   }
 
   draw() {
-    // context.fillStyle = 'white'
-    // context.fillRect(this.position.x, this.position.y, this.width, this.height)
     if(this.image) {
       context.drawImage(this.image, this.position.x, this.position.y, this.height, this.width)
     }
@@ -553,10 +537,10 @@ const animate = () => {
   })
 
   if(keys.a.pressed && player.position.x >= 0) {
-    player.velocity.x = -7
+    player.velocity.x = -6
     player.rotation = - .15
   } else if(keys.d.pressed && player.position.x + player.width <= canvas.width) {
-    player.velocity.x = 7
+    player.velocity.x = 6
     player.rotation = .15
   } else {
     player.velocity.x = 0
@@ -564,9 +548,9 @@ const animate = () => {
   }
 
   if(keys.w.pressed && player.position.y >= 50) {
-    player.velocity.y = -7
+    player.velocity.y = -6
   } else if(keys.s.pressed && player.position.y <= canvas.height - 75) {
-    player.velocity.y = 7
+    player.velocity.y = 6
   } else {
     player.velocity.y = 0
   }
