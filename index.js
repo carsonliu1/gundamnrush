@@ -483,10 +483,8 @@ const animate = () => {
           enemy.position.x + enemy.width >= player.position.x &&
           enemy.position.x <= player.position.x + player.width * 0.5 &&
           enemy.position.y <= player.position.y + player.height) {
-          setTimeout(() => {
-            player.opacity = 0
-            game.over = true
-          }, 0)
+          player.opacity = 0
+          game.over = true
           setTimeout(() => {
             game.active = false
           }, 1000)
