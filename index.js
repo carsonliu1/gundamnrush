@@ -304,6 +304,8 @@ const init = () => {
   frames = 0
   scoreEle.innerHTML = score
   endGameScore.innerHTML = score
+  startModel.style.visibility = 'hidden'
+  cornerScore.style.visibility = 'visible'
 }
 
 player.draw()
