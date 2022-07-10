@@ -3,6 +3,7 @@ const scoreEle = document.querySelector('#scoreEle')
 const startGameEle = document.querySelector('#startGameBtn')
 const startModel = document.querySelector('#model')
 const endGameScore = document.querySelector('#endGameScore')
+const points = document.querySelector('#points')
 const cornerScore = document.querySelector('#cornerScore')
 const first = document.querySelector('#first')
 const second = document.querySelector('#second')
@@ -376,7 +377,7 @@ const createParticles = ({ object, color, fades }) => {
         x: (Math.random() - 0.5) * 2,
         y: (Math.random() - 0.5) * 2
       },
-      radius: Math.random() * 3,
+      radius: Math.random() * 1.8,
       color: color || 'orange',
       fades
     }))
@@ -393,9 +394,11 @@ const animate = () => {
   if(!game.active) {
     bgm.pause()
     startGameEle.innerHTML = 'Game Over! Restart'
-    startModel.style.display = 'flex'
+    startModel.style.visibility = 'visible'
+    points.style.visibility = 'visible'
+    endGameScore.style.visibility = 'visible'
     endGameScore.innerHTML = score
-    // let char = prompt('Enter your name to save')
+    let char = prompt('Enter your name to save')
     // postScore(char, score)
     return
   }
@@ -403,7 +406,14 @@ const animate = () => {
     bgm.pause()
     game.active = false
     game.over = true
-    return alert('You win!')
+    startGameEle.innerHTML = 'You win!'
+    startModel.style.visibility = 'visible'
+    points.style.visibility = 'visible'
+    endGameScore.style.visibility = 'visible'
+    endGameScore.innerHTML = score
+    let char = prompt('Enter your name to save')
+    // postScore(char, score)
+    return
   }
   // if(scoreEle.innerHTML === 200) return alert('aaa')
   animationId = requestAnimationFrame(animate)
@@ -484,6 +494,28 @@ const animate = () => {
     }
     grid.enemies.forEach((enemy, idx) => {
       enemy.update({ velocity: grid.velocity })
+      if(enemy.position) {
+        if(enemy.position.y + enemy.height >= player.position.y &&
+          enemy.position.x + enemy.width >= player.position.x &&
+          enemy.position.x <= player.position.x + player.width * 0.5 &&
+          enemy.position.y <= player.position.y + player.height) {
+          setTimeout(() => {
+            enemyProjectiles.splice(idx, 1)
+            player.opacity = 0
+            game.over = true
+          }, 0)
+          setTimeout(() => {
+            game.active = false
+          }, 2000)
+          createParticles({
+            object: player,
+            color: 'yellow',
+            fades: true
+          })
+          death.volume = 0.1
+          death.play()
+        }
+      }
       projectiles.forEach((projectile, idx2) => {
         if(
           projectile.position.y - projectile.radius <= enemy.position.y + enemy.height &&
@@ -531,7 +563,7 @@ const animate = () => {
     player.rotation = 0
   }
 
-  if(keys.w.pressed && player.position.y >= canvas.height - 270) {
+  if(keys.w.pressed && player.position.y >= 50) {
     player.velocity.y = -7
   } else if(keys.s.pressed && player.position.y <= canvas.height - 75) {
     player.velocity.y = 7
@@ -570,6 +602,18 @@ addEventListener('keydown', ({ key }) => {
     case 's':
       keys.s.pressed = true
       break
+    case 'ArrowLeft':
+      keys.a.pressed = true
+      break
+    case 'ArrowRight':
+      keys.d.pressed = true
+      break
+    case 'ArrowUp':
+      keys.w.pressed = true
+      break
+    case 'ArrowDown':
+      keys.s.pressed = true
+      break
     // case ' ':
     //   projectiles.push(new Projectile({
     //     position: {
@@ -586,6 +630,7 @@ addEventListener('keydown', ({ key }) => {
 })
 
 addEventListener('keyup', ({ key }) => {
+  console.log(key)
   if(game.over) return
   switch(key) {
     case 'a':
@@ -600,14 +645,25 @@ addEventListener('keyup', ({ key }) => {
     case 's':
       keys.s.pressed = false
       break
-    // case ' ':
-    //   break
+    case 'ArrowLeft':
+      keys.a.pressed = false
+      break
+    case 'ArrowRight':
+      keys.d.pressed = false
+      break
+    case 'ArrowUp':
+      keys.w.pressed = false
+      break
+    case 'ArrowDown':
+      keys.s.pressed = false
+      break
   }
 })
 
 addEventListener('keydown', (e) => {
   if(game.over) return
-  if(e.repeat) return
+  // if(e.repeat) return
+  audio.pause()
   switch(e.key) {
     case ' ':
       audio.volume = 0.04
@@ -633,8 +689,10 @@ startGameEle.addEventListener('click', () => {
 
   init()
   animate()
-  startModel.style.display = 'none'
-  cornerScore.style.display = 'flex'
+  startModel.style.visibility = 'hidden'
+  cornerScore.style.visibility = 'visible'
 })
-cornerScore.style.display = 'none'
-top5.style.display ='none'
+cornerScore.style.visibility = 'hidden'
+top5.style.visibility = 'hidden'
+points.style.visibility = 'hidden'
+endGameScore.style.visibility = 'hidden'
