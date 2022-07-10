@@ -361,7 +361,7 @@ const createParticles = ({ object, color, fades }) => {
         x: (Math.random() - 0.5) * 2,
         y: (Math.random() - 0.5) * 2
       },
-      radius: Math.random() * 1.8,
+      radius: Math.random() * 1.5,
       color: color || 'orange',
       fades
     }))
@@ -487,7 +487,7 @@ const animate = () => {
           game.over = true
           setTimeout(() => {
             game.active = false
-          }, 1000)
+          }, 100)
           createParticles({
             object: player,
             color: 'yellow',
@@ -610,8 +610,7 @@ addEventListener('keydown', ({ key }) => {
   }
 })
 
-addEventListener('keyup', ({ key }) => {
-  console.log(key)
+addEventListener('keyup', ({ key }) => {``
   if(game.over) return
   switch(key) {
     case 'a':
