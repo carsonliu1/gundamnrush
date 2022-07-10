@@ -382,7 +382,7 @@ const animate = () => {
     points.style.visibility = 'visible'
     endGameScore.style.visibility = 'visible'
     endGameScore.innerHTML = score
-    let char = prompt('Enter your name to save')
+    // let char = prompt('Enter your name to save')
     // postScore(char, score)
     return
   }
@@ -395,7 +395,7 @@ const animate = () => {
     points.style.visibility = 'visible'
     endGameScore.style.visibility = 'visible'
     endGameScore.innerHTML = score
-    let char = prompt('Enter your name to save')
+    // let char = prompt('Enter your name to save')
     // postScore(char, score)
     return
   }
