@@ -5,36 +5,7 @@ const startModel = document.querySelector('#model')
 const endGameScore = document.querySelector('#endGameScore')
 const points = document.querySelector('#points')
 const cornerScore = document.querySelector('#cornerScore')
-const first = document.querySelector('#first')
-const second = document.querySelector('#second')
-const third = document.querySelector('#third')
-const fourth = document.querySelector('#fourth')
-const fifth = document.querySelector('#fifth')
-const top5 = document.querySelector('#top5')
 const context = canvas.getContext('2d')
-// const getScores = () => {
-//   axios.get(`http://localhost:80/scores`)
-//   .then(res => {
-//     first.innerHTML = `${res.data[0].name}: ${res.data[0].score}`
-//     second.innerHTML = `${res.data[1].name}: ${res.data[1].score}`
-//     third.innerHTML = `${res.data[2].name}: ${res.data[2].score}`
-//     fourth.innerHTML = `${res.data[3].name}: ${res.data[3].score}`
-//     fifth.innerHTML = `${res.data[4].name}: ${res.data[4].score}`
-//   })
-//   .catch(err => alert(err))
-//   top5.style.display ='flex'
-// }
-
-// const postScore = (name, score) => {
-//   if(name.length !== 0) {
-//   axios.post(`http://localhost:80/scores`, {name, score})
-//     .then(res => {
-//       alert('Your name and score has been added.')
-//       getScores()
-//     })
-//     .catch(err => alert(err))
-//   }
-// }
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -382,8 +353,6 @@ const animate = () => {
     points.style.visibility = 'visible'
     endGameScore.style.visibility = 'visible'
     endGameScore.innerHTML = score
-    // let char = prompt('Enter your name to save')
-    // postScore(char, score)
     return
   }
   if(score >= 100000) {
@@ -395,14 +364,9 @@ const animate = () => {
     points.style.visibility = 'visible'
     endGameScore.style.visibility = 'visible'
     endGameScore.innerHTML = score
-    // let char = prompt('Enter your name to save')
-    // postScore(char, score)
     return
   }
-  // if(scoreEle.innerHTML === 200) return alert('aaa')
   animationId = requestAnimationFrame(animate)
-  // context.fillStyle ='black'
-  // context.fillRect(0, 0, canvas.width, canvas.height)
   const background = new Image()
   background.src = 'https://i.gifer.com/1ErA.gif'
   background.onload = () => {
@@ -495,7 +459,6 @@ const animate = () => {
           })
           death.volume = 0.1
           death.play()
-          return
         }
       }
       projectiles.forEach((projectile, idx2) => {
@@ -596,18 +559,6 @@ addEventListener('keydown', ({ key }) => {
     case 'ArrowDown':
       keys.s.pressed = true
       break
-    // case ' ':
-    //   projectiles.push(new Projectile({
-    //     position: {
-    //       x: player.position.x + player.width / 2,
-    //       y: player.position.y
-    //     },
-    //     velocity: {
-    //       x: 0,
-    //       y: -7
-    //     }
-    //   }))
-    //   break
   }
 })
 
@@ -667,7 +618,6 @@ startGameEle.addEventListener('click', () => {
   bgm.loop = true
   bgm.volume = 0.13
   bgm.play()
-
   init()
   animate()
   startModel.style.visibility = 'hidden'
@@ -676,6 +626,5 @@ startGameEle.addEventListener('click', () => {
   endGameScore.style.visibility = 'hidden'
 })
 cornerScore.style.visibility = 'hidden'
-top5.style.visibility = 'hidden'
 points.style.visibility = 'hidden'
 endGameScore.style.visibility = 'hidden'
